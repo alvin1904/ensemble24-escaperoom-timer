@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Fonts from "@/components/Fonts";
 
 export const metadata: Metadata = {
   title: "Ensemble EscapeRoom Timer",
@@ -13,7 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <head>
+        <Fonts />
+      </head>
+      <body className="barlow-regular">{children}</body>
     </html>
   );
 }
