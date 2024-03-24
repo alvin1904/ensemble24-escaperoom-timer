@@ -1,47 +1,64 @@
 "use client";
 
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
-type userContextType = {
-  token: string | null;
-  userDetails: userDetailsType | null;
-  signOut: () => void;
-  handleAuthentication: () => void;
-  fetchUserDetails: () => void;
+type timeContextType = {
+  seconds: number;
+  isActive: boolean;
+  toggleTimer: () => void;
+  resetTimer: () => void;
 };
 
-const userContext = createContext<userContextType>({
-  token: null,
-  userDetails: null,
-  signOut: () => {},
-  handleAuthentication: () => {},
-  fetchUserDetails: () => {},
-});
+const def = {
+  seconds: 600,
+  isActive: false,
+  toggleTimer: () => {},
+  resetTimer: () => {},
+};
 
-export function UserProvider({ children }: { children: ReactNode }) {
-  const [token, setToken] = useState<string | null>(null);
-  const fetchToken = async () => {
-    try {
-    } catch (err) {
-      console.log(err);
+const timeContext = createContext<timeContextType>(def);
+
+export function TimeProvider({ children }: { children: ReactNode }) {
+  const [seconds, setSeconds] = useState(600); // 10 minutes in seconds
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleTimer = () => {
+    setIsActive(!isActive);
+  };
+
+  const resetTimer = () => {
+    setIsActive(false);
+    setSeconds(600);
+  };
+
+  useEffect(() => {
+    let interval: any = null;
+
+    if (isActive && seconds > 0) {
+      interval = setInterval(() => {
+        setSeconds((seconds) => seconds - 1);
+      }, 1000);
+    } else if (seconds === 0) {
+      clearInterval(interval);
+      setIsActive(false);
+      alert("Timer is up!");
     }
-  };
-  const updateDetails = async () => {
-    try {
-    } catch (err: any) {}
-  };
+
+    return () => clearInterval(interval);
+  }, [isActive, seconds]);
+
   return (
-    <userContext.Provider
-      value={{
-        token,
-        userDetails,
-        signOut,
-        handleAuthentication,
-        fetchUserDetails,
-      }}
+    <timeContext.Provider
+      value={{ seconds, isActive, toggleTimer, resetTimer }}
     >
       {children}
-    </userContext.Provider>
+    </timeContext.Provider>
   );
 }
 

@@ -2,36 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Button from "./Button";
+import { useTimeContext } from "@/lib/timeContext";
 
 const Timer = () => {
-  const [seconds, setSeconds] = useState(600); // 10 minutes in seconds
-  const [isActive, setIsActive] = useState(false);
-
-  const toggleTimer = () => {
-    setIsActive(!isActive);
-  };
-
-  const resetTimer = () => {
-    setIsActive(false);
-    setSeconds(600);
-  };
-
-  useEffect(() => {
-    let interval: any = null;
-
-    if (isActive && seconds > 0) {
-      interval = setInterval(() => {
-        setSeconds((seconds) => seconds - 1);
-      }, 1000);
-    } else if (seconds === 0) {
-      clearInterval(interval);
-      setIsActive(false);
-      alert("Timer is up!");
-    }
-
-    return () => clearInterval(interval);
-  }, [isActive, seconds]);
-
+  const { seconds, isActive, toggleTimer, resetTimer } = useTimeContext();
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
