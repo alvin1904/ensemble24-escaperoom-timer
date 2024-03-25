@@ -18,7 +18,7 @@ const Timer = () => {
     <div className="w-fit flex flex-col items-center justify-center">
       <h1
         className={cn(
-          "text-[300px] select-none",
+          "md:text-[300px] text-[130px] select-none",
           isRed ? "text-red-500" : "text-white"
         )}
       >

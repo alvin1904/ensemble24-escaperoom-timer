@@ -35,7 +35,7 @@ const Aside = () => {
         </DrawerTrigger>
         <DrawerContent className="mx-auto w-full bg-gray-900 text-white pb-10 outline-none border-none">
           <DrawerHeader>
-            <DrawerTitle className="text-[1.5rem]">
+            <DrawerTitle className="text-[1.5rem] md:leading-normal leading-none">
               Hint #{hint}. {advice}{" "}
               <span className="text-green-500">{phno}</span>
             </DrawerTitle>
