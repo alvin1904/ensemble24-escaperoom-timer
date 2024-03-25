@@ -16,16 +16,17 @@ import { hints } from "@/data";
 
 const Aside = () => {
   const [hint, setHint] = useState(0);
-
+  let advice = `Message the given clue to Jiyan Job.`;
+  let phno = `(wa.me/+91${process.env.NEXT_PUBLIC_PHONE})`;
   return (
     <>
       <Drawer>
         <DrawerTrigger asChild>
           <div className="flex flex-col items-center justify-center gap-10">
-            <p className="text-center text-lg leading-tight px-5">
+            <p className="text-center text-xl leading-tight px-5">
               You may use hints. Each hint costs 1 minute of your time in the
-              escape room. Message the message to Jiyan Job. (+91{" "}
-              {process.env.NEXT_PUBLIC_PHONE})
+              escape room. {advice}.{" "}
+              <span className="text-green-500">{phno}</span>
             </p>
             <Button onClick={() => setHint(1)}>Use hint #1</Button>
             <Button onClick={() => setHint(2)}>Use hint #2</Button>
@@ -34,7 +35,10 @@ const Aside = () => {
         </DrawerTrigger>
         <DrawerContent className="mx-auto w-full bg-gray-900 text-white pb-10 outline-none border-none">
           <DrawerHeader>
-            <DrawerTitle className="text-[1.5rem]">Hint #{hint}</DrawerTitle>
+            <DrawerTitle className="text-[1.5rem]">
+              Hint #{hint}. {advice}{" "}
+              <span className="text-green-500">{phno}</span>
+            </DrawerTitle>
             <DrawerDescription className="text-[2rem] leading-tight">
               {hints[hint]}
             </DrawerDescription>

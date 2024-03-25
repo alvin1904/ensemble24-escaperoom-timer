@@ -25,7 +25,7 @@ const Timer = () => {
         {formatTime(seconds)}
       </h1>
       <div className="flex gap-4 items-center">
-        <Button onClick={toggleTimer}>{isActive ? "Pause" : "Start"}</Button>
+        <Button onClick={toggleTimer}>{isActive ? "Stop" : "Start"}</Button>
         <Button onClick={resetTimer}>Reset</Button>
       </div>
     </div>
