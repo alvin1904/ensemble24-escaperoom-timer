@@ -37,9 +37,15 @@ const Aside = () => {
               escape room. {advice}.{" "}
               <span className="text-green-500">{phno}</span>
             </p>
-            <Button onClick={() => setHint(1)}>Use hint #1</Button>
-            <Button onClick={() => setHint(2)}>Use hint #2</Button>
-            <Button onClick={() => setHint(3)}>Use hint #3</Button>
+            {hints.map((hint, index) => {
+              if (hint === "") return <></>;
+              else
+                return (
+                  <Button onClick={() => setHint(index)}>
+                    Use hint #{index}
+                  </Button>
+                );
+            })}
           </div>
         </DrawerTrigger>
         <DrawerContent className="mx-auto w-full bg-gray-900 text-white pb-10 outline-none border-none">

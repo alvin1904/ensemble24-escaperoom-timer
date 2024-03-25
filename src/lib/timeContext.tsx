@@ -68,7 +68,6 @@ export function TimeProvider({ children }: { children: ReactNode }) {
     } else if (seconds === 0) {
       clearInterval(interval);
       setIsActive(false);
-      alert("Timer is up!");
     }
 
     return () => clearInterval(interval);
