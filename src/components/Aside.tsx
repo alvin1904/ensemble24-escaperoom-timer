@@ -16,11 +16,9 @@ import { hints } from "@/data";
 import { useTimeContext } from "@/lib/timeContext";
 
 const Aside = () => {
-  const [hint, setHint] = useState(0);
-  const [usedHints, setUsedHints] = useState<number[]>([0]);
-  const { reduce1Min } = useTimeContext();
+  const { reduce1Min, hint, setHint, usedHints, setUsedHints } =
+    useTimeContext();
   useEffect(() => {
-    console.log({ hint, usedHints });
     if (!usedHints.includes(hint)) {
       reduce1Min();
       let temp = [...usedHints, hint];
@@ -56,7 +54,9 @@ const Aside = () => {
           </DrawerHeader>
           <DrawerFooter>
             <DrawerClose asChild>
-              <Button onClick={() => {}}>Close</Button>
+              <Button className="max-w-[200px]" onClick={() => {}}>
+                Close
+              </Button>
             </DrawerClose>
           </DrawerFooter>
         </DrawerContent>

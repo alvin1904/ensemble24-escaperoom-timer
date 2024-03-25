@@ -2,7 +2,9 @@
 
 import { redTime, totalTime } from "@/data";
 import {
+  Dispatch,
   ReactNode,
+  SetStateAction,
   createContext,
   useContext,
   useEffect,
@@ -17,6 +19,10 @@ type timeContextType = {
   changeTime: (n: number) => void;
   isRed: boolean;
   reduce1Min: () => void;
+  hint: number;
+  setHint: Dispatch<SetStateAction<number>>;
+  usedHints: number[];
+  setUsedHints: Dispatch<SetStateAction<number[]>>;
 };
 
 const def = {
@@ -27,6 +33,10 @@ const def = {
   changeTime: (n: number) => {},
   isRed: false,
   reduce1Min: () => {},
+  hint: 0,
+  setHint: () => {},
+  usedHints: [0],
+  setUsedHints: () => {},
 };
 
 const timeContext = createContext<timeContextType>(def);
@@ -35,6 +45,8 @@ export function TimeProvider({ children }: { children: ReactNode }) {
   const [seconds, setSeconds] = useState(totalTime); // 10 minutes in seconds
   const [isActive, setIsActive] = useState(false);
   const [isRed, setIsRed] = useState(false);
+  const [hint, setHint] = useState(0);
+  const [usedHints, setUsedHints] = useState<number[]>([0]);
 
   const toggleTimer = () => {
     setIsActive(!isActive);
@@ -43,6 +55,7 @@ export function TimeProvider({ children }: { children: ReactNode }) {
   const resetTimer = () => {
     setIsActive(false);
     setSeconds(totalTime);
+    setUsedHints([0]);
   };
 
   useEffect(() => {
@@ -83,6 +96,10 @@ export function TimeProvider({ children }: { children: ReactNode }) {
         changeTime,
         isRed,
         reduce1Min,
+        setUsedHints,
+        setHint,
+        hint,
+        usedHints,
       }}
     >
       {children}
