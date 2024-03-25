@@ -57,6 +57,7 @@ export function TimeProvider({ children }: { children: ReactNode }) {
     setSeconds(totalTime);
     setUsedHints([0]);
     setHint(0);
+    setIsRed(false);
   };
 
   useEffect(() => {
