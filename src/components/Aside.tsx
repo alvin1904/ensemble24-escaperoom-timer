@@ -25,7 +25,7 @@ const Aside = () => {
       setUsedHints(temp);
     }
   }, [hint]);
-  let advice = `Message the given clue to Jiyan Job.`;
+  let advice = `Message the given clue to Jiyaan Job`;
   let phno = `(wa.me/+91${process.env.NEXT_PUBLIC_PHONE})`;
   return (
     <>
@@ -41,7 +41,7 @@ const Aside = () => {
               if (hint === "") return <></>;
               else
                 return (
-                  <Button onClick={() => setHint(index)}>
+                  <Button onClick={() => setHint(index)} key={index}>
                     Use hint #{index}
                   </Button>
                 );
