@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import Button from "./Button";
 import {
   Drawer,
@@ -13,9 +13,20 @@ import {
   DrawerTrigger,
 } from "./ui/drawer";
 import { hints } from "@/data";
+import { useTimeContext } from "@/lib/timeContext";
 
 const Aside = () => {
   const [hint, setHint] = useState(0);
+  const [usedHints, setUsedHints] = useState<number[]>([0]);
+  const { reduce1Min } = useTimeContext();
+  useEffect(() => {
+    console.log({ hint, usedHints });
+    if (!usedHints.includes(hint)) {
+      reduce1Min();
+      let temp = [...usedHints, hint];
+      setUsedHints(temp);
+    }
+  }, [hint]);
   let advice = `Message the given clue to Jiyan Job.`;
   let phno = `(wa.me/+91${process.env.NEXT_PUBLIC_PHONE})`;
   return (
@@ -44,7 +55,7 @@ const Aside = () => {
             </DrawerDescription>
           </DrawerHeader>
           <DrawerFooter>
-            <DrawerClose>
+            <DrawerClose asChild>
               <Button onClick={() => {}}>Close</Button>
             </DrawerClose>
           </DrawerFooter>

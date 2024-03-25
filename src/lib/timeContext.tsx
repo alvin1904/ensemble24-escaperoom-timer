@@ -16,6 +16,7 @@ type timeContextType = {
   resetTimer: () => void;
   changeTime: (n: number) => void;
   isRed: boolean;
+  reduce1Min: () => void;
 };
 
 const def = {
@@ -25,6 +26,7 @@ const def = {
   resetTimer: () => {},
   changeTime: (n: number) => {},
   isRed: false,
+  reduce1Min: () => {},
 };
 
 const timeContext = createContext<timeContextType>(def);
@@ -67,9 +69,21 @@ export function TimeProvider({ children }: { children: ReactNode }) {
     setSeconds(sec);
   };
 
+  const reduce1Min = () => {
+    setSeconds((seconds) => seconds - 60);
+  };
+
   return (
     <timeContext.Provider
-      value={{ seconds, isActive, toggleTimer, resetTimer, changeTime, isRed }}
+      value={{
+        seconds,
+        isActive,
+        toggleTimer,
+        resetTimer,
+        changeTime,
+        isRed,
+        reduce1Min,
+      }}
     >
       {children}
     </timeContext.Provider>
