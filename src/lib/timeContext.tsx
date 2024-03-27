@@ -53,8 +53,8 @@ export function TimeProvider({ children }: { children: ReactNode }) {
   };
 
   const resetTimer = () => {
-    setIsActive(false);
     setSeconds(totalTime);
+    setIsActive(false);
     setUsedHints([0]);
     setHint(0);
     setIsRed(false);
@@ -84,7 +84,7 @@ export function TimeProvider({ children }: { children: ReactNode }) {
   };
 
   const reduce1Min = () => {
-    setSeconds((seconds) => seconds - 60);
+    if (seconds > 60) setSeconds((seconds) => seconds - 60);
   };
 
   return (
