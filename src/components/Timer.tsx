@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import { useTimeContext } from "@/lib/timeContext";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const Timer = () => {
   const { seconds, isActive, toggleTimer, resetTimer, isRed } =
@@ -13,6 +14,8 @@ const Timer = () => {
     const seconds = time % 60;
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
+
+  const logoImage = process.env.NEXT_PUBLIC_LOGO;
 
   return (
     <div className="w-fit flex flex-col items-center justify-center">
@@ -24,13 +27,22 @@ const Timer = () => {
       >
         {formatTime(seconds)}
       </h1>
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-8 items-center">
         <Button
           className="rounded-full w-28 h-28 bg-transparent duration-300 ease-in-out border outline-none border-white hover:bg-white/10 hover:backdrop-blur-sm flex items-center justify-center"
           onClick={toggleTimer}
         >
           {isActive ? "Stop" : "Start"}
         </Button>
+        {logoImage && (
+          <Image
+            src={logoImage}
+            width={40}
+            height={100}
+            alt="logo"
+            className="w-10"
+          />
+        )}
         <Button
           className="rounded-full w-28 h-28 bg-transparent duration-300 ease-in-out border outline-none border-white hover:bg-white/10 hover:backdrop-blur-sm flex items-center justify-center"
           onClick={resetTimer}
