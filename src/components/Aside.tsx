@@ -25,7 +25,7 @@ const Aside = () => {
         <DrawerTrigger asChild>
           <div className="flex flex-col items-center justify-center gap-10">
             <br />
-            <p className="text-center md:text-xl text-md leading-tight px-5">
+            <p className="text-center xl:text-xl text-md leading-tight px-5">
               {appConfig.heading.line1}
               {(appConfig.timePenaltyForHint / 60)
                 .toFixed(2)
@@ -44,7 +44,7 @@ const Aside = () => {
                 </>
               )}
             </p>
-            <div className="md:max-h-[60vh] p-4 w-full grid grid-cols-2 gap-8 overflow-y-auto scroll-m-0">
+            <div className="xl:max-h-[60vh] p-4 w-full grid grid-cols-2 gap-8 overflow-y-auto scroll-m-0">
               {appConfig.hints.map((hint, index) => {
                 if (hint === "") return <></>;
                 else
@@ -53,7 +53,7 @@ const Aside = () => {
                       <Button
                         onClick={() => setHint(index)}
                         key={index}
-                        className="h-full bg-white/20 text-2xl hover:bg-white/30 duration-500 ease-in-out"
+                        className="h-full w-full bg-white/20 text-2xl hover:bg-white/30 duration-500 ease-in-out"
                       >
                         Hint #{index + 1}
                       </Button>
@@ -78,7 +78,7 @@ const Aside = () => {
         {hint !== null && (
           <DrawerContent className="mx-auto w-full bg-black/50 backdrop-blur-md text-white p-8 pb-20 outline-none border-none">
             <DrawerHeader>
-              <DrawerTitle className="text-[1.5rem] md:leading-normal leading-none">
+              <DrawerTitle className="text-[1.5rem] xl:leading-normal leading-none">
                 Hint #{hint + 1}
               </DrawerTitle>
               <DrawerDescription className="text-[3.5rem] leading-tight">
