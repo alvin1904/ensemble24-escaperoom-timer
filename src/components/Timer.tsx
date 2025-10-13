@@ -22,8 +22,11 @@ const Timer = () => {
       <h1
         className={cn(
           "xl:text-[300px] text-[130px] select-none",
-          isRed ? "text-red-500" : "text-white"
+          isRed ? "text-red-700" : "text-white"
         )}
+        style={{
+          WebkitTextStroke: isRed ? "2px #f11" : "2px #fff",
+        }}
       >
         {formatTime(seconds)}
       </h1>

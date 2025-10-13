@@ -18,7 +18,7 @@ type timeContextType = {
   resetTimer: () => void;
   changeTime: (n: number) => void;
   isRed: boolean;
-  reduce1Min: () => void;
+  penaltyTheTime: () => void;
   hint: null | number;
   setHint: Dispatch<SetStateAction<number | null>>;
   usedHints: number[];
@@ -32,7 +32,7 @@ const def = {
   resetTimer: () => {},
   changeTime: (n: number) => {},
   isRed: false,
-  reduce1Min: () => {},
+  penaltyTheTime: () => {},
   hint: null,
   setHint: () => {},
   usedHints: [0],
@@ -83,14 +83,15 @@ export function TimeProvider({ children }: { children: ReactNode }) {
     setSeconds(sec);
   };
 
-  const reduce1Min = () => {
+  const penaltyTheTime = () => {
     const penalty = appConfig.timePenaltyForHint;
     if (seconds > penalty) setSeconds((seconds) => seconds - penalty);
+    else if (appConfig.timeOutIfHintTakenCausesTimeUp) setSeconds(0);
   };
 
   useEffect(() => {
     if (hint !== null && !usedHints.includes(hint)) {
-      reduce1Min();
+      penaltyTheTime();
       let temp = [...usedHints, hint];
       setUsedHints(temp);
     }
@@ -105,7 +106,7 @@ export function TimeProvider({ children }: { children: ReactNode }) {
         resetTimer,
         changeTime,
         isRed,
-        reduce1Min,
+        penaltyTheTime,
         setUsedHints,
         setHint,
         hint,

@@ -10,6 +10,7 @@ export const appConfig = {
   ],
   messageToName: "",
   requireWhatsappMessage: false,
+  timeOutIfHintTakenCausesTimeUp: true,
   heading: {
     line1: "You may use hints. Each hint costs ",
     line2: "minute of your time in the escape room.",
