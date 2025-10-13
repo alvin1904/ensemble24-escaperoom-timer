@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "www.ritu25.live",
+        hostname: process.env.NEXT_PUBLIC_LOGO_DOMAIN,
         port: "",
         pathname: "**",
       },
