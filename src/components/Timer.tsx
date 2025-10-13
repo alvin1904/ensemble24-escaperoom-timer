@@ -18,7 +18,7 @@ const Timer = () => {
   const logoImage = process.env.NEXT_PUBLIC_LOGO;
 
   return (
-    <div className="w-fit flex flex-col items-center justify-center">
+    <div className="w-fit h-full flex flex-col items-center justify-center">
       <h1
         className={cn(
           "md:text-[300px] text-[130px] select-none",
@@ -29,7 +29,7 @@ const Timer = () => {
       </h1>
       <div className="flex gap-8 items-center">
         <Button
-          className="rounded-full w-28 h-28 bg-transparent duration-300 ease-in-out border outline-none border-white hover:bg-white/10 hover:backdrop-blur-sm flex items-center justify-center"
+          className="rounded-full w-28 h-28 select-none bg-transparent duration-300 ease-in-out border outline-none border-white hover:bg-white/10 hover:backdrop-blur-sm flex items-center justify-center"
           onClick={toggleTimer}
         >
           {isActive ? "Stop" : "Start"}
@@ -44,7 +44,7 @@ const Timer = () => {
           />
         )}
         <Button
-          className="rounded-full w-28 h-28 bg-transparent duration-300 ease-in-out border outline-none border-white hover:bg-white/10 hover:backdrop-blur-sm flex items-center justify-center"
+          className="rounded-full w-28 h-28 select-none bg-transparent duration-300 ease-in-out border outline-none border-white hover:bg-white/10 hover:backdrop-blur-sm flex items-center justify-center"
           onClick={resetTimer}
         >
           Reset

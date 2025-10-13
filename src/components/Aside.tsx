@@ -1,13 +1,10 @@
 "use client";
 
-import React, { useEffect } from "react";
 import Button from "./Button";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -15,9 +12,10 @@ import {
 import { useTimeContext } from "@/lib/timeContext";
 import { appConfig } from "@/app.config";
 import Link from "next/link";
+import { LockKeyhole, LockOpen } from "lucide-react";
 
 const Aside = () => {
-  const { hint, setHint } = useTimeContext();
+  const { hint, setHint, usedHints } = useTimeContext();
 
   let advice = `Message the given clue to ${appConfig.messageToName}`;
   let whasappLink = `https://wa.me/+91${process.env.NEXT_PUBLIC_PHONE}`;
@@ -46,18 +44,32 @@ const Aside = () => {
                 </>
               )}
             </p>
-            <div className="max-h-[30vh] md:max-h-[60vh] p-4 w-full grid grid-cols-2 gap-4 overflow-y-auto scroll-m-0">
+            <div className="md:max-h-[60vh] p-4 w-full grid grid-cols-2 gap-8 overflow-y-auto scroll-m-0">
               {appConfig.hints.map((hint, index) => {
                 if (hint === "") return <></>;
                 else
                   return (
-                    <Button
-                      onClick={() => setHint(index)}
-                      key={index}
-                      className="h-32 bg-white/20 text-2xl hover:bg-white/30 duration-500 ease-in-out"
-                    >
-                      Hint #{index + 1}
-                    </Button>
+                    <div className="h-32 relative">
+                      <Button
+                        onClick={() => setHint(index)}
+                        key={index}
+                        className="h-full bg-white/20 text-2xl hover:bg-white/30 duration-500 ease-in-out"
+                      >
+                        Hint #{index + 1}
+                      </Button>
+                      {usedHints.includes(index) ? (
+                        <LockOpen
+                          size={18}
+                          className="absolute -top-2 -left-2"
+                        />
+                      ) : (
+                        <LockKeyhole
+                          size={24}
+                          className="absolute -top-2 -left-2"
+                          strokeWidth={3}
+                        />
+                      )}
+                    </div>
                   );
               })}
             </div>
