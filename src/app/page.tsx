@@ -4,7 +4,7 @@ import { TimeProvider } from "@/lib/timeContext";
 
 export default function Home() {
   return (
-    <main className="h-screen w-screen overflow-hidden bg-black bg-[url(/bg.webp)] bg-cover bg-center flex flex-col xl:flex-row text-white">
+    <main className="min-h-screen w-screen overflow-hidden bg-black bg-[url(/bg-3.webp)] bg-cover bg-center flex flex-col xl:flex-row text-white">
       <TimeProvider>
         <section className="flex-1 flex items-center justify-center">
           <div className="flex items-center justify-center py-8">
