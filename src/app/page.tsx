@@ -4,14 +4,14 @@ import { TimeProvider } from "@/lib/timeContext";
 
 export default function Home() {
   return (
-    <main className="md:h-screen h-fit w-screen overflow-hidden bg-black flex flex-col md:flex-row text-white">
+    <main className="h-screen w-screen overflow-hidden bg-black bg-[url(/bg.webp)] flex flex-col md:flex-row text-white">
       <TimeProvider>
         <section className="flex-1 p-10">
           <div className="flex items-center justify-center py-8">
             <Timer />
           </div>
         </section>
-        <aside className="bg-gray-800 p-8 w-full md:w-[450px]">
+        <aside className="bg-black/10 backdrop-blur-3xl border-l-2 border-white/10 p-8 w-full md:w-[450px]">
           <Aside />
         </aside>
       </TimeProvider>

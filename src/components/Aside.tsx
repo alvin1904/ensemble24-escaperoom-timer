@@ -1,6 +1,6 @@
 "use client";
 
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Button from "./Button";
 import {
   Drawer,
@@ -12,60 +12,69 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "./ui/drawer";
-import { hints } from "@/data";
 import { useTimeContext } from "@/lib/timeContext";
+import { appConfig } from "@/app.config";
+import Link from "next/link";
 
 const Aside = () => {
-  const { reduce1Min, hint, setHint, usedHints, setUsedHints } =
-    useTimeContext();
-  useEffect(() => {
-    if (!usedHints.includes(hint)) {
-      reduce1Min();
-      let temp = [...usedHints, hint];
-      setUsedHints(temp);
-    }
-  }, [hint]);
-  let advice = `Message the given clue to Jiyaan Job`;
-  let phno = `(wa.me/+91${process.env.NEXT_PUBLIC_PHONE})`;
+  const { hint, setHint } = useTimeContext();
+
+  let advice = `Message the given clue to ${appConfig.messageToName}`;
+  let whasappLink = `https://wa.me/+91${process.env.NEXT_PUBLIC_PHONE}`;
   return (
     <>
       <Drawer>
         <DrawerTrigger asChild>
           <div className="flex flex-col items-center justify-center gap-10">
-            <p className="text-center text-xl leading-tight px-5">
-              You may use hints. Each hint costs 1 minute of your time in the
-              escape room. {advice}.{" "}
-              <span className="text-green-500">{phno}</span>
+            <br />
+            <p className="text-center md:text-xl text-md leading-tight px-5">
+              {appConfig.heading.line1}
+              {(appConfig.timePenaltyForHint / 60)
+                .toFixed(2)
+                .replace(".00", "")}{" "}
+              {appConfig.heading.line2}
+              <br />
+              {appConfig.requireWhatsappMessage && (
+                <>
+                  {advice}
+                  <Link
+                    href={whasappLink}
+                    className="text-green-500 hover:underline"
+                  >
+                    {whasappLink}
+                  </Link>
+                </>
+              )}
             </p>
-            {hints.map((hint, index) => {
-              if (hint === "") return <></>;
-              else
-                return (
-                  <Button onClick={() => setHint(index)} key={index}>
-                    Use hint #{index}
-                  </Button>
-                );
-            })}
+            <div className="max-h-[30vh] md:max-h-[60vh] p-4 w-full grid grid-cols-2 gap-4 overflow-y-auto scroll-m-0">
+              {appConfig.hints.map((hint, index) => {
+                if (hint === "") return <></>;
+                else
+                  return (
+                    <Button
+                      onClick={() => setHint(index)}
+                      key={index}
+                      className="h-32 bg-white/20 text-2xl hover:bg-white/30 duration-500 ease-in-out"
+                    >
+                      Hint #{index + 1}
+                    </Button>
+                  );
+              })}
+            </div>
           </div>
         </DrawerTrigger>
-        <DrawerContent className="mx-auto w-full bg-gray-900 text-white pb-10 outline-none border-none">
-          <DrawerHeader>
-            <DrawerTitle className="text-[1.5rem] md:leading-normal leading-none">
-              Hint #{hint}. {advice}{" "}
-              <span className="text-green-500">{phno}</span>
-            </DrawerTitle>
-            <DrawerDescription className="text-[2rem] leading-tight">
-              {hints[hint]}
-            </DrawerDescription>
-          </DrawerHeader>
-          <DrawerFooter>
-            <DrawerClose asChild>
-              <Button className="max-w-[200px]" onClick={() => {}}>
-                Close
-              </Button>
-            </DrawerClose>
-          </DrawerFooter>
-        </DrawerContent>
+        {hint !== null && (
+          <DrawerContent className="mx-auto w-full bg-black/50 backdrop-blur-md text-white p-8 pb-20 outline-none border-none">
+            <DrawerHeader>
+              <DrawerTitle className="text-[1.5rem] md:leading-normal leading-none">
+                Hint #{hint + 1}
+              </DrawerTitle>
+              <DrawerDescription className="text-[3.5rem] leading-tight">
+                {appConfig.hints[hint]}
+              </DrawerDescription>
+            </DrawerHeader>
+          </DrawerContent>
+        )}
       </Drawer>
     </>
   );
