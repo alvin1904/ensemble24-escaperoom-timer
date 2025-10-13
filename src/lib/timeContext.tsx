@@ -1,6 +1,6 @@
 "use client";
 
-import { redTime, totalTime } from "@/data";
+import { appConfig } from "@/app.config";
 import {
   Dispatch,
   ReactNode,
@@ -19,21 +19,21 @@ type timeContextType = {
   changeTime: (n: number) => void;
   isRed: boolean;
   reduce1Min: () => void;
-  hint: number;
-  setHint: Dispatch<SetStateAction<number>>;
+  hint: null | number;
+  setHint: Dispatch<SetStateAction<number | null>>;
   usedHints: number[];
   setUsedHints: Dispatch<SetStateAction<number[]>>;
 };
 
 const def = {
-  seconds: totalTime,
+  seconds: appConfig.totalTimeInSeconds,
   isActive: false,
   toggleTimer: () => {},
   resetTimer: () => {},
   changeTime: (n: number) => {},
   isRed: false,
   reduce1Min: () => {},
-  hint: 0,
+  hint: null,
   setHint: () => {},
   usedHints: [0],
   setUsedHints: () => {},
@@ -42,21 +42,21 @@ const def = {
 const timeContext = createContext<timeContextType>(def);
 
 export function TimeProvider({ children }: { children: ReactNode }) {
-  const [seconds, setSeconds] = useState(totalTime); // 10 minutes in seconds
+  const [seconds, setSeconds] = useState(appConfig.totalTimeInSeconds); // 10 minutes in seconds
   const [isActive, setIsActive] = useState(false);
   const [isRed, setIsRed] = useState(false);
-  const [hint, setHint] = useState(0);
-  const [usedHints, setUsedHints] = useState<number[]>([0]);
+  const [hint, setHint] = useState<null | number>(null);
+  const [usedHints, setUsedHints] = useState<number[]>([]);
 
   const toggleTimer = () => {
     setIsActive(!isActive);
   };
 
   const resetTimer = () => {
-    setSeconds(totalTime);
+    setSeconds(appConfig.totalTimeInSeconds);
     setIsActive(false);
-    setUsedHints([0]);
-    setHint(0);
+    setUsedHints([]);
+    setHint(null);
     setIsRed(false);
   };
 
@@ -76,7 +76,7 @@ export function TimeProvider({ children }: { children: ReactNode }) {
   }, [isActive, seconds]);
 
   useEffect(() => {
-    if (seconds < redTime) setIsRed(true);
+    if (seconds < appConfig.timeAtRedColor) setIsRed(true);
   }, [seconds]);
 
   const changeTime = (sec: number) => {
@@ -84,8 +84,17 @@ export function TimeProvider({ children }: { children: ReactNode }) {
   };
 
   const reduce1Min = () => {
-    if (seconds > 60) setSeconds((seconds) => seconds - 60);
+    const penalty = appConfig.timePenaltyForHint;
+    if (seconds > penalty) setSeconds((seconds) => seconds - penalty);
   };
+
+  useEffect(() => {
+    if (hint !== null && !usedHints.includes(hint)) {
+      reduce1Min();
+      let temp = [...usedHints, hint];
+      setUsedHints(temp);
+    }
+  }, [hint]);
 
   return (
     <timeContext.Provider

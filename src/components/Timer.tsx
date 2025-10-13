@@ -25,8 +25,18 @@ const Timer = () => {
         {formatTime(seconds)}
       </h1>
       <div className="flex gap-4 items-center">
-        <Button onClick={toggleTimer}>{isActive ? "Stop" : "Start"}</Button>
-        <Button onClick={resetTimer}>Reset</Button>
+        <Button
+          className="rounded-full w-28 h-28 bg-transparent duration-300 ease-in-out border outline-none border-white hover:bg-white/10 hover:backdrop-blur-sm flex items-center justify-center"
+          onClick={toggleTimer}
+        >
+          {isActive ? "Stop" : "Start"}
+        </Button>
+        <Button
+          className="rounded-full w-28 h-28 bg-transparent duration-300 ease-in-out border outline-none border-white hover:bg-white/10 hover:backdrop-blur-sm flex items-center justify-center"
+          onClick={resetTimer}
+        >
+          Reset
+        </Button>
       </div>
     </div>
   );
