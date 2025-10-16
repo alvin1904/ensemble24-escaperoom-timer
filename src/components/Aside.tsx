@@ -78,10 +78,10 @@ const Aside = () => {
         {hint !== null && (
           <DrawerContent className="mx-auto w-full bg-black/50 backdrop-blur-md text-white p-8 pb-20 outline-none border-none">
             <DrawerHeader>
-              <DrawerTitle className="text-[1.5rem] xl:leading-normal leading-none">
+              <DrawerTitle className="text-[1.5rem] xl:leading-normal leading-none mb-4">
                 Hint #{hint + 1}
               </DrawerTitle>
-              <DrawerDescription className="text-[3.5rem] leading-tight">
+              <DrawerDescription className="lg:text-[3.5rem] text-[1.75rem] leading-tight">
                 {appConfig.hints[hint]}
               </DrawerDescription>
             </DrawerHeader>
