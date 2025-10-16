@@ -49,7 +49,7 @@ const Aside = () => {
                 if (hint === "") return <></>;
                 else
                   return (
-                    <div className="h-32 relative">
+                    <div className="h-32 relative" key={index}>
                       <Button
                         onClick={() => setHint(index)}
                         key={index}
